@@ -108,7 +108,7 @@ const dl2=new THREE.DirectionalLight(0xffffff,0.3); dl2.position.set(-5,-5,-5); 
 const dl3=new THREE.DirectionalLight(0xffffff,0.15); dl3.position.set(0,5,-10); scene.add(dl3);
 
 let isDragging=false,isRight=false,prevX=0,prevY=0;
-let sph={theta:0.3,phi:Math.PI/2.5,radius:3},tgt={...sph};
+let sph={theta:0.3,phi:Math.PI/2,radius:3},tgt={...sph};
 let pan={x:0,y:0},tpan={x:0,y:0};
 
 function updateCam() {
@@ -162,7 +162,7 @@ loader.load('smartpen.glb',
     const sc=2.0/Math.max(sz.x,sz.y,sz.z);
     m.scale.setScalar(sc);
     m.position.sub(cn.multiplyScalar(sc));
-    m.rotation.x=-Math.PI/2;
+    // 세로로 세우기: rotation 제거 (GLB 기본 방향 유지)
     scene.add(m); window._model=m;
     tgt.radius=sph.radius=2.5;
     document.getElementById('loading').style.display='none';
@@ -175,7 +175,7 @@ loader.load('smartpen.glb',
 
 const VIEWS={front:{t:0,p:Math.PI/2,r:2.5},back:{t:Math.PI,p:Math.PI/2,r:2.5},left:{t:-Math.PI/2,p:Math.PI/2,r:2.5},right:{t:Math.PI/2,p:Math.PI/2,r:2.5},top:{t:0,p:0.05,r:2.5},iso:{t:Math.PI/4,p:Math.PI/3,r:3}};
 document.querySelectorAll('.preset-btn').forEach(b=>b.addEventListener('click',()=>{const v=VIEWS[b.dataset.view];if(v){tgt.theta=v.t;tgt.phi=v.p;tgt.radius=v.r;tpan={x:0,y:0};}}));
-document.getElementById('reset-btn').addEventListener('click',()=>{tgt={theta:0.3,phi:Math.PI/2.5,radius:2.5};tpan={x:0,y:0};});
+document.getElementById('reset-btn').addEventListener('click',()=>{tgt={theta:0.3,phi:Math.PI/2,radius:2.5};tpan={x:0,y:0};});
 
 let wire=false;
 document.getElementById('wire-btn').addEventListener('click',()=>{
